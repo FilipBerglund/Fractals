@@ -107,54 +107,54 @@ void Main::draw()
   // y = 2x
 
   Timer t;
-//  std::vector<unsigned int> X(size.x);
-//  std::iota(X.begin(), X.end(), 0);
-//  std::vector<unsigned int> Y(size.y);
-//  std::iota(Y.begin(), Y.end(), 0);
-//
-//  std::for_each(
-//      std::execution::par,
-//      X.begin(),
-//      X.end(),
-//      [this, size, Y, &graph](unsigned int x)
-//      {
-//      std::for_each(
-//          std::execution::par,
-//          Y.begin(),
-//          Y.end(),
-//          [this, x, size, &graph](unsigned int y)
-//          {
-//          double xd{x};
-//          double yd{y};
-//          xd = 4 * xd / size.x - 2;
-//          yd = 4 * yd / size.y - 2;
-//
-//          xd = xd/scale + xPos;
-//          yd = yd/scale + yPos;
-//
-//          std::complex<double> c(xd,yd);
-//          graph.setPixel(x, y, fun(c));
-//
-//          });
-//      });
+  std::vector<unsigned int> X(size.x);
+  std::iota(X.begin(), X.end(), 0);
+  std::vector<unsigned int> Y(size.y);
+  std::iota(Y.begin(), Y.end(), 0);
+
+  std::for_each(
+      std::execution::par,
+      X.begin(),
+      X.end(),
+      [this, size, Y, &graph](unsigned int x)
+      {
+      std::for_each(
+          std::execution::par,
+          Y.begin(),
+          Y.end(),
+          [this, x, size, &graph](unsigned int y)
+          {
+          double xd{x};
+          double yd{y};
+          xd = 4 * xd / size.x - 2;
+          yd = 4 * yd / size.y - 2;
+
+          xd = xd/scale + xPos;
+          yd = yd/scale + yPos;
+
+          std::complex<double> c(xd,yd);
+          graph.setPixel(x, y, fun(c));
+
+          });
+      });
 
 
-  for (unsigned int x = 0; x < size.x; x++)
-  {
-    for (unsigned int y = 0; y < size.y; y++)
-    {
-      double xd{x};
-      double yd{y};
-      xd = 4 * xd / size.x - 2;
-      yd = 4 * yd / size.y - 2;
-
-      xd = xd/scale + xPos;
-      yd = yd/scale + yPos;
-
-      std::complex<double> c(xd,yd);
-      graph.setPixel(x, y, fun(c));
-    }
-  }
+//  for (unsigned int x = 0; x < size.x; x++)
+//  {
+//    for (unsigned int y = 0; y < size.y; y++)
+//    {
+//      double xd{x};
+//      double yd{y};
+//      xd = 4 * xd / size.x - 2;
+//      yd = 4 * yd / size.y - 2;
+//
+//      xd = xd/scale + xPos;
+//      yd = yd/scale + yPos;
+//
+//      std::complex<double> c(xd,yd);
+//      graph.setPixel(x, y, fun(c));
+//    }
+//  }
   std::cout << t.elapsed() << std::endl;
   //std::cout << i << std::endl;
 
