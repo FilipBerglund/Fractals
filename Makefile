@@ -1,6 +1,7 @@
 CCC := g++
-CFLAGS := -std=c++17 -O1 -Wall -Wextra -Weffc++ -Wpedantic -Weffc++ -g -fno-elide-constructors
-#-ltbb -ltbbmalloc -ltbbmalloc_proxy
+CFLAGS := -std=c++20 -O3 -Wall -Wextra -Weffc++ -Wpedantic -Weffc++ -g -fno-elide-constructors
+TBBFlags :=#-ltbb -ltbbmalloc -ltbbmalloc_proxy
+#CFLAGS := -std=c++20 -L/usr/local/lib -ltbb -ltbbmalloc -ltbbmalloc_proxy
 SFMLFLAGS := -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
 
 SRC := src#Source directory
@@ -23,7 +24,7 @@ BIN_GAME := $(addprefix $(BIN)/,$(IN_GAME_FILES:.cc=.o))
 all: game
 
 game: $(BIN_GAME)
-	$(CCC) $(CFLAGS) $(BIN_GAME) -o Fractals $(SFMLFLAGS)
+	$(CCC) $(TBBFlags) $(CFLAGS) $(BIN_GAME) -o Fractals $(SFMLFLAGS)
 
 test: $(filter-out main.cc, $(BIN_GAME)) $(BIN_TEST)
 	$(CCC) $(CFLAGS) $(filter-out $(BIN)/main.o, $(BIN_GAME)) $(BIN_TEST) -o Test $(SFMLFLAGS)

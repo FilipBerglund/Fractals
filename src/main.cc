@@ -10,7 +10,9 @@
 #include "fun.h"
 #include <complex>
 #include "timer.h"
+#include "rects.h"
 #include <vector>
+//#include <tbb/tbb.h>
 //#include "tbb/blocked_range.h"
 //#include "tbb/parallel_for.h"
 //#include "tbb/task_scheduler_init.h"
@@ -24,16 +26,16 @@ Main::Main():
   fps_clock{},
   fps{},
   target{},
-  event{}
+  event{},
+  scale{1},
+  xPos{0},
+  yPos{0}
   //menu_music{}
 {
   load_window_settings();
   //menu_music.openFromFile("res/menu_music.oog");
   //menu_music.play();
   //menu_music.setLoop(true);
-  xPos = 0;
-  yPos = 0;
-  scale = 1;
 }
 
 void Main::run()
@@ -104,59 +106,11 @@ void Main::draw()
   sf::Vector2u size(width, height);
   sf::Image graph;
   graph.create(size.x, size.y, sf::Color(255, 255, 255));
-  // y = 2x
 
   Timer t;
-  std::vector<unsigned int> X(size.x);
-  std::iota(X.begin(), X.end(), 0);
-  std::vector<unsigned int> Y(size.y);
-  std::iota(Y.begin(), Y.end(), 0);
+  colorGraph(graph, xPos, yPos, scale, size.x, size.y);
 
-  std::for_each(
-      std::execution::par,
-      X.begin(),
-      X.end(),
-      [this, size, Y, &graph](unsigned int x)
-      {
-      std::for_each(
-          std::execution::par,
-          Y.begin(),
-          Y.end(),
-          [this, x, size, &graph](unsigned int y)
-          {
-          double xd{x};
-          double yd{y};
-          xd = 4 * xd / size.x - 2;
-          yd = 4 * yd / size.y - 2;
-
-          xd = xd/scale + xPos;
-          yd = yd/scale + yPos;
-
-          std::complex<double> c(xd,yd);
-          graph.setPixel(x, y, fun(c));
-
-          });
-      });
-
-
-//  for (unsigned int x = 0; x < size.x; x++)
-//  {
-//    for (unsigned int y = 0; y < size.y; y++)
-//    {
-//      double xd{x};
-//      double yd{y};
-//      xd = 4 * xd / size.x - 2;
-//      yd = 4 * yd / size.y - 2;
-//
-//      xd = xd/scale + xPos;
-//      yd = yd/scale + yPos;
-//
-//      std::complex<double> c(xd,yd);
-//      graph.setPixel(x, y, fun(c));
-//    }
-//  }
   std::cout << t.elapsed() << std::endl;
-  //std::cout << i << std::endl;
 
   sf::Texture texture;
   texture.loadFromImage(graph);
@@ -180,10 +134,5 @@ void Main::load_window_settings()
     target = sf::Time{sf::milliseconds(1000 / fps)};
     settings.close();
 }
-
-
-
-
-
 
 #endif
