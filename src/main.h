@@ -4,6 +4,11 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+extern sf::Vector2i size;
+extern double scale;
+extern double xPos;
+extern double yPos;
+
 class Main
 {
 public:
@@ -27,10 +32,6 @@ private:
     double fps;
     sf::Time target;
     sf::Event event;
-    double scale;
-    double xPos;
-    double yPos;
-
     //sf::Music menu_music;
 };
 #endif

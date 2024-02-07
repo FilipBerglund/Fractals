@@ -17,6 +17,12 @@
 //#include "tbb/parallel_for.h"
 //#include "tbb/task_scheduler_init.h"
 
+
+sf::Vector2i size;
+double scale = 1;
+double xPos = 0;
+double yPos = 0;
+
 Main::Main():
   width{},
   height{},
@@ -26,10 +32,7 @@ Main::Main():
   fps_clock{},
   fps{},
   target{},
-  event{},
-  scale{1},
-  xPos{0},
-  yPos{0}
+  event{}
   //menu_music{}
 {
   load_window_settings();
@@ -103,12 +106,11 @@ void Main::draw()
 {
   window.clear();
 
-  sf::Vector2u size(width, height);
   sf::Image graph;
-  graph.create(size.x, size.y, sf::Color(255, 255, 255));
+  graph.create(width, height, sf::Color(0, 0, 0));
 
   Timer t;
-  colorGraph(graph, xPos, yPos, scale, size.x, size.y);
+  colorGraph(graph);
 
   std::cout << t.elapsed() << std::endl;
 
@@ -128,6 +130,7 @@ void Main::load_window_settings()
     settings.open("res/window_settings.txt");
     settings >> width;
     settings >> height;
+    size  = sf::Vector2i(width, height);
     window.create(sf::VideoMode{width, height}, "Playing with Fire");
 
     settings >> fps;

@@ -2,9 +2,11 @@
 #define FUNCC
 
 #include <complex>
+#include <iostream>
 #include <SFML/Graphics.hpp>
+#include "fun.h"
 
-int maxIter{100};
+int maxIter = 300;
 
 /*
  * With complex numbers.
@@ -64,9 +66,13 @@ int iterations(double cx, double cy)
     return(iter);
 }
 
+sf::Color iterToColor(int iter) {
+    return(sf::Color(iter*10, iter*10, 0));
+}
+
 sf::Color fun(double cx, double cy)
 {
   int iter = iterations(cx, cy);
-  return(sf::Color(iter*10, iter*10, 0));
+  return iterToColor(iter);
 }
 #endif
