@@ -24,7 +24,7 @@ double screenToGraphY(int y) {
     return screenToGraphY(double(y));
 }
 
-int mp[1000][1000]{0};
+int mp[1001][1001]{0};
 int mapp(double x, double y) {
     return mapp(int(x), int(y));
 }
