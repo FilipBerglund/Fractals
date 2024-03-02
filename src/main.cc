@@ -113,6 +113,7 @@ void Main::draw()
   colorGraph(graph);
 
   std::cout << t.elapsed() << std::endl;
+  std::cout << scale << std::endl;
 
   sf::Texture texture;
   texture.loadFromImage(graph);

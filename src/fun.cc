@@ -66,8 +66,35 @@ int iterations(double cx, double cy)
     return(iter);
 }
 
+/*
+ * Iterations to color.
+ */
 sf::Color iterToColor(int iter) {
-    return(sf::Color(iter*10, iter*10, 0));
+    const double S{1};
+    const double L{0.5};
+    double H = double(iter)/double(maxIter)*12;
+
+    double C = (1 - std::abs(2*L - 1))*S;
+    double X = C*(1 - std::abs(std::fmod(H, 2) - 1));
+    double m = L - C/2;
+
+    C *= 255;
+    X *= 255;
+    m *= 255;
+
+    if (H < 1) {
+        return(sf::Color(C + m, X + m, m));
+    } else if (H < 2) {
+        return(sf::Color(X + m, C + m, m));
+    } else if (H < 3) {
+        return(sf::Color(m, C + m, X + m));
+    } else if (H < 4) {
+        return(sf::Color(m, X + m, C + m));
+    } else if (H < 5) {
+        return(sf::Color(X + m, m, C + m));
+    } else { //if (H < 6) {
+        return(sf::Color(C + m, m, X + m));
+    }
 }
 
 sf::Color fun(double cx, double cy)
